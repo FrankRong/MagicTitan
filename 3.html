@@ -1,0 +1,95 @@
+﻿<HTML><HEAD><TITLE>无间断滚动原理</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+</HEAD>
+<BODY>
+<div id="tbmq">
+  <table width="300" border="1" align="left" bgcolor="#00CCFF">
+    <tr> 
+      <td height="30"> </td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr> 
+      <td height="30"> </td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr> 
+      <td height="30"> </td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr> 
+      <td height="30"> </td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr> 
+      <td height="30"> </td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+  </table>
+</div>
+<script>
+function MqObj(obj,width,height,speed,direct){
+	obj.contWidth=obj.offsetWidth;// offsetWidth
+	obj.stopscroll=false;
+	obj.nowscroll=0;
+	with(obj){
+		scrollLeft=0;//
+		innerHTML+=innerHTML;
+		style.width=width;
+		style.height=height;
+		style.overflowX="hidden";//
+		style.overflowY="visible";//
+		noWrap=true;
+		onmouseover=function(){stopscroll=true};
+		onmouseout=function(){stopscroll=false};
+	}
+	eval("setInterval('doScroll("+obj.id+")',"+speed+")");
+}
+function doScroll(obj){
+	if(obj.stopscroll==true) return;
+	if(obj.nowscroll<obj.contWidth){ // 
+	obj.scrollLeft=obj.nowscroll++;//scrollLeft
+	}else{
+	obj.scrollLeft=0;//scrollLeft
+	obj.nowscroll=0;
+	}
+}
+window.onload=function(){
+	MqObj(tbmq,"250","200","10")
+	MqObj(tbmq2,"270","200","50")
+}
+</script>
+<div id="tbmq2"> 
+  <table width="300" border="1" align="left" bgcolor="#00CCFF">
+    <tr> 
+      <td height="30"> </td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr> 
+      <td height="30"> </td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr> 
+      <td height="30"> </td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr> 
+      <td height="30"> </td>
+      <td>4</td>
+      <td> </td>
+    </tr>
+    <tr> 
+      <td height="30"> </td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+  </table>
+</div>
+</BODY></HTML>

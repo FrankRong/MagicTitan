@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>跟随鼠标的图片效果</title>
+
+<style type="text/css">
+
+	body {
+		margin: 0px;
+		padding: 0px;
+		background: #000;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+	.thumb {
+		position: relative;
+		float: left;
+		display: block;
+		width: 47%;
+		height: 46%;
+		margin-left: 2%;
+		margin-top: 2%;
+		overflow: hidden;
+		cursor: crosshair;
+	}
+	.thumb img {
+		position: absolute;
+	}
+</style>
+
+
+<script type="text/javascript">
+var thu = [];
+
+function run(){
+	for (var i in thu) thu[i].scroll();
+	setTimeout(run, 16);
+}
+
+function scroll(){
+	var div = document.body.getElementsByTagName('div');
+	for(var i = 0, n = div.length; i < n; i++) {
+		var o = div[i];
+		if (o.className.indexOf('thumb') >= 0) {
+			thu.push(o);
+			o.img = o.getElementsByTagName('img')[0];
+			o.nwi = o.img.width;
+			o.nhi = o.img.height;
+			o.img = o.img.style;
+			o.x0  = 0;
+			o.y0  = 0;
+			o.xm  = 0;
+			o.ym  = 0;
+			o.onmousemove = function (e) {
+				if (window.event) e = window.event;
+				this.xm = e.clientX;
+				this.ym = e.clientY;
+			}
+			o.scroll = function () {
+				var xmo = Math.min(this.nw, Math.max(0, this.xm - this.nx));
+				var ymo = Math.min(this.nh, Math.max(0, this.ym - this.ny));
+				var x = -xmo * (this.nwi / this.nw) + xmo;
+				var y = -ymo * (this.nhi / this.nh) + ymo;
+				this.x0 += ((this.x0 > x) ? -1 : 1) * Math.abs(this.x0 - x) * .1;
+				this.y0 += ((this.y0 > y) ? -1 : 1) * Math.abs(this.y0 - y) * .1;
+				this.img.left = ''.concat(Math.round(this.x0), 'px');
+				this.img.top  = ''.concat(Math.round(this.y0), 'px');
+			}
+			o.onresize = function () {
+				this.nx = 0;
+				this.ny = 0;
+				this.nw = this.offsetWidth;
+				this.nh = this.offsetHeight;
+				for (var o = this; o != null; o = o.offsetParent) this.nx += o.offsetLeft, this.ny += o.offsetTop;
+			}
+			o.onresize();
+		}
+	}
+	run();
+}
+
+onload = function() {
+	scroll();
+}
+
+</script>
+</head>
+
+<body>
+
+<div class="thumb"><img alt="" src="http://www.lanrentuku.com/down/js/images/12492980870.jpg"></div>
+<div class="thumb"><img alt="" src="http://www.lanrentuku.com/down/js/images/12492980871.jpg"></div>
+<p style="color:#FFFFFF">小意思 不成敬意：<a href="http://www.baidu.com" target="_blank">百度一下</a></p>
+
+</body>
+</html>
